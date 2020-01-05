@@ -82,8 +82,8 @@ namespace AlbumViewerNetCore
             {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
-                            // required if AllowCredentials is set also
-                        .SetIsOriginAllowed(s=> true)
+                        // required if AllowCredentials is set also
+                        .SetIsOriginAllowed(s => true)
                         //.AllowAnyOrigin()
                         .AllowAnyMethod()  // doesn't work for DELETE!
                         .WithMethods("DELETE")
@@ -124,7 +124,7 @@ namespace AlbumViewerNetCore
 
 
 
-			// Instance injection
+            // Instance injection
             services.AddScoped<AlbumRepository>();
             services.AddScoped<ArtistRepository>();
             services.AddScoped<AccountRepository>();
@@ -132,7 +132,7 @@ namespace AlbumViewerNetCore
             // Per request injections
             services.AddScoped<ApiExceptionFilter>();
 
-       
+
 
             services.AddControllers()
                 // Use classic JSON 
@@ -168,74 +168,58 @@ namespace AlbumViewerNetCore
             loggerFactory
                 .AddSerilog();
 
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-			}
-			else
-			{
-				app.UseExceptionHandler(errorApp =>
+            }
+            else
+            {
+                app.UseExceptionHandler(errorApp =>
 
-						// Application level exception handler here - this is just a place holder
-						errorApp.Run(async (context) =>
-						{
-							context.Response.StatusCode = 500;
-							context.Response.ContentType = "text/html";
-							await context.Response.WriteAsync("<html><body>\r\n");
-							await context.Response.WriteAsync(
-									"We're sorry, we encountered an un-expected issue with your application.<br>\r\n");
+                        // Application level exception handler here - this is just a place holder
+                        errorApp.Run(async (context) =>
+                        {
+                            context.Response.StatusCode = 500;
+                            context.Response.ContentType = "text/html";
+                            await context.Response.WriteAsync("<html><body>\r\n");
+                            await context.Response.WriteAsync(
+                                    "We're sorry, we encountered an un-expected issue with your application.<br>\r\n");
 
-							// Capture the exception
-							var error = context.Features.Get<IExceptionHandlerFeature>();
-							if (error != null)
-							{
-								// This error would not normally be exposed to the client
-								await
-									context.Response.WriteAsync("<br>Error: " +
-																HtmlEncoder.Default.Encode(error.Error.Message) +
-																"<br>\r\n");
-							}
-							await context.Response.WriteAsync("<br><a href=\"/\">Home</a><br>\r\n");
-							await context.Response.WriteAsync("</body></html>\r\n");
-							await context.Response.WriteAsync(new string(' ', 512)); // Padding for IE
-						}));
-			}
-
-            //app.UseHttpsRedirection();
+                            // Capture the exception
+                            var error = context.Features.Get<IExceptionHandlerFeature>();
+                            if (error != null)
+                            {
+                                // This error would not normally be exposed to the client
+                                await
+                                    context.Response.WriteAsync("<br>Error: " +
+                                                                HtmlEncoder.Default.Encode(error.Error.Message) +
+                                                                "<br>\r\n");
+                            }
+                            await context.Response.WriteAsync("<br><a href=\"/\">Home</a><br>\r\n");
+                            await context.Response.WriteAsync("</body></html>\r\n");
+                            await context.Response.WriteAsync(new string(' ', 512)); // Padding for IE
+                        }));
+            }
 
             Console.WriteLine("\r\nPlatform: " + System.Runtime.InteropServices.RuntimeInformation.OSDescription);
             string useSqLite = Configuration["Data:useSqLite"];
-			Console.WriteLine(useSqLite == "true" ? "SqLite" : "Sql Server");
+            Console.WriteLine(useSqLite == "true" ? "SqLite" : "Sql Server");
 
             app.UseRouting();
 
             app.UseCors("CorsPolicy");
 
-
             app.UseAuthentication();
             app.UseAuthorization();
 
-		    //app.UseDatabaseErrorPage();
             app.UseStatusCodePages();
 
             app.UseDefaultFiles(); // so index.html is not required
             app.UseStaticFiles();
 
+            //app.UseMiddleware<ApplicationInsightsLoggingMiddleware>();
 
-            // Handle Lets Encrypt Route (before MVC processing!)
-            // alternately use an MVC Route (in ConfigurationController)
-            //app.UseRouter(r =>
-            //{
-            //    r.MapGet(".well-known/acme-challenge/{id}", async (request, response, routeData) =>
-            //    {
-            //        var id = routeData.Values["id"] as string;
-            //        var file = Path.Combine(env.WebRootPath, ".well-known","acme-challenge", id);
-            //        await response.SendFileAsync(file);
-            //    });
-            //});
-
-            //// put last so header configs like CORS or Cookies etc can fire
+            // put last so header configs like CORS or Cookies etc can fire
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -251,9 +235,9 @@ namespace AlbumViewerNetCore
                 if (env.WebRootPath == null)
                     throw new InvalidOperationException("wwwroot folder doesn't exist. Please recompile your Angular Project before accessing index.html. API calls will work fine.");
 
-		        context.Response.ContentType = "text/html";
-				await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
-	        });
+                context.Response.ContentType = "text/html";
+                await context.Response.SendFileAsync(Path.Combine(env.WebRootPath, "index.html"));
+            });
 
             // Initialize Database if it doesn't exist
             AlbumViewerDataImporter.EnsureAlbumData(albumContext,
