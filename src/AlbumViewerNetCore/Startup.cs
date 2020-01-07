@@ -18,6 +18,7 @@ using Serilog;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.Extensions.Hosting;
+using Microsoft.ApplicationInsights.Extensibility;
 
 namespace AlbumViewerNetCore
 {
