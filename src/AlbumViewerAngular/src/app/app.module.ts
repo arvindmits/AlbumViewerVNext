@@ -43,7 +43,7 @@ import { FocusDirective } from './common/focusDirective';
 
 
 import { NgbTypeaheadModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
-import { ApplicationInsightsErrorHandler } from './business/application-insights.errorhandler';
+import { ApplicationInsightsErrorHandler } from './common/application-insights.errorhandler';
 
 
 //declare var $:any;

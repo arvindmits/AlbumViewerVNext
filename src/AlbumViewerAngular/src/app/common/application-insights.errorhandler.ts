@@ -1,7 +1,7 @@
 // https://github.com/bugsnag/bugsnag-js/blob/master/packages/plugin-angular/src/index.ts
 
 import { ErrorHandler, Injectable } from "@angular/core";
-import { ApplicationInsightsService } from "./application-insights.service";
+import { ApplicationInsightsService } from "../business/application-insights.service";
 
 @Injectable({
     providedIn: 'root'

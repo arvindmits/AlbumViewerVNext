@@ -5,7 +5,7 @@ import {ErrorInfo} from "./errorDisplay";
 declare var toastr:any;
 
 import {ActivatedRoute, Router} from "@angular/router";
-import { ApplicationInsightsService } from '../business/application-insights.service';
+import { ApplicationInsightsService } from './application-insights.service';
 
 @Component({
     //moduleId: module.id,

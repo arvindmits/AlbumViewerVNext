@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {UserInfo} from "./business/userInfo";
-import {ApplicationInsightsService} from './business/application-insights.service';
+import {ApplicationInsightsService} from './common/application-insights.service';
 
 declare var toastr:any;
 
