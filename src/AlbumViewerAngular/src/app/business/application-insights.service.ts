@@ -1,7 +1,7 @@
 // https://github.com/jdubois/spring-on-azure/blob/master/src/main/webapp/app/core/insights/application-insights.service.ts
 
 import { Injectable, OnInit } from '@angular/core';
-import { ApplicationInsights } from '@microsoft/applicationinsights-web';
+import { ApplicationInsights, IExceptionTelemetry } from '@microsoft/applicationinsights-web';
 import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
@@ -38,6 +38,13 @@ export class ApplicationInsightsService {
 
     logPageView(name?: string, uri?: string) {
         this.appInsights.trackPageView({ name, uri });
+    }
+
+    trackError(error: Error) {
+        let telemetry = {
+            exception: error
+        } as IExceptionTelemetry;
+        this.appInsights.trackException(telemetry);
     }
 
     private getActivatedComponent(snapshot: ActivatedRouteSnapshot): any {
