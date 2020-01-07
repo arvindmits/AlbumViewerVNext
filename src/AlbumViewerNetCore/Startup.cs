@@ -217,7 +217,7 @@ namespace AlbumViewerNetCore
             app.UseDefaultFiles(); // so index.html is not required
             app.UseStaticFiles();
 
-            //app.UseMiddleware<ApplicationInsightsLoggingMiddleware>();
+            app.UseMiddleware<ApplicationInsightsLoggingMiddleware>();
 
             // put last so header configs like CORS or Cookies etc can fire
             app.UseEndpoints(endpoints =>
