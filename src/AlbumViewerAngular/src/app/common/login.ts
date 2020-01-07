@@ -5,6 +5,7 @@ import {ErrorInfo} from "./errorDisplay";
 declare var toastr:any;
 
 import {ActivatedRoute, Router} from "@angular/router";
+import { ApplicationInsightsService } from '../business/application-insights.service';
 
 @Component({
     //moduleId: module.id,
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
 
     constructor(public user:UserInfo,
                 private route:ActivatedRoute,
-                private router: Router)
+                private router: Router,
+                private appInsights: ApplicationInsightsService)
     {  }
 
     ngOnInit() {
@@ -45,6 +47,7 @@ export class LoginComponent implements OnInit {
       this.user.authenticate(this.username,this.password)
         .subscribe(() => {
             this.user.isAuthenticated = true;
+            this.appInsights.setUserId(this.username);
             toastr.success("You are logged in.");
             var url = "/albums";
             if (this.user.requestedUrl)
@@ -53,6 +56,7 @@ export class LoginComponent implements OnInit {
             this.router.navigate([url]);
         },
         (err)=> {
+          this.appInsights.clearUserId();
           this.error.error(err);
           this.password="";
           toastr.warning("Login failed: " + err.message);
@@ -63,6 +67,7 @@ export class LoginComponent implements OnInit {
     logout() {
         this.user.logout()
           .subscribe((success) => {
+            this.appInsights.clearUserId();
             toastr.success("Logged out.");
             this.router.navigate(["/albums"]);
           });

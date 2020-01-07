@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {UserInfo} from "./business/userInfo";
+import {ApplicationInsightsService} from './business/application-insights.service';
 
 declare var toastr:any;
 
@@ -11,7 +12,7 @@ declare var toastr:any;
 export class AppComponent {
     title = 'Test Application';
 
-    constructor(private user: UserInfo) {
+    constructor(private user: UserInfo, private appInsights: ApplicationInsightsService) {
         // check authentication when the page is loaded
         // fire and forget - service updates the auth
         // status model
@@ -23,8 +24,10 @@ export class AppComponent {
             var previousStatus = user.isAuthenticated;
             this.user.checkAuthentication()
                 .subscribe((isAuthenticated)=> {
-                    if (!isAuthenticated && previousStatus)
+                    if (!isAuthenticated && previousStatus) {
+                        appInsights.clearUserId();
                         toastr.warning("Your session has expired. Please log in again.");
+                    }
                 });
         },120000)
     }
