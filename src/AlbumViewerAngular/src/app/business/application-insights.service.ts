@@ -6,13 +6,15 @@ import { ActivatedRouteSnapshot, ResolveEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+  })
 export class ApplicationInsightsService {
     private routerSubscription: Subscription;
 
     private appInsights = new ApplicationInsights({
         config: {
-            instrumentationKey: 'a8aca698-844c-4515-9875-fb6b480e4fec'
+            instrumentationKey: '9d6565dc-c40e-4c0f-a09c-d21d8d533108'
         }
     });
 

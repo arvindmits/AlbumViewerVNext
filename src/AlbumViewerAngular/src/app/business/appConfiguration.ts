@@ -15,7 +15,7 @@ export class AppConfiguration {
           console.log("AppConfiguration ctor");
           this.setToastrOptions();
           
-          if(location.port && (location.port == "3000") || (location.port== "4200") )
+          //if(location.port && (location.port == "3000") || (location.port== "4200") )
             this.urls.baseUrl = "http://localhost:5000/"; // kestrel
 
           //this.urls.baseUrl = "http://localhost:5001/"; // kestrel
