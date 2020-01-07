@@ -133,7 +133,7 @@ namespace AlbumViewerNetCore
             // Per request injections
             services.AddScoped<ApiExceptionFilter>();
 
-
+            services.AddSingleton<ITelemetryInitializer, UserNameTelemetryInitializer>();
 
             services.AddControllers()
                 // Use classic JSON 
