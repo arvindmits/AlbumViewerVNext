@@ -114,7 +114,8 @@ namespace AlbumViewerNetCore
                         ValidAudience = config.JwtToken.Audience,
                         ValidateIssuerSigningKey = true,
                         IssuerSigningKey = new SymmetricSecurityKey(
-                            Encoding.UTF8.GetBytes(config.JwtToken.SigningKey))
+                            Encoding.UTF8.GetBytes(config.JwtToken.SigningKey)),
+                        NameClaimType = "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"
                     };
 
                 });
