@@ -122,7 +122,7 @@ namespace AlbumViewerNetCore
 
 
 
-
+            services.AddApplicationInsightsTelemetry();
 
 
             // Instance injection
