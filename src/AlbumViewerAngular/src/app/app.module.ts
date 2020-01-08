@@ -1,4 +1,4 @@
-import {NgModule, Injectable} from '@angular/core'
+import {NgModule, Injectable, ErrorHandler} from '@angular/core'
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from "./app.component";
 
@@ -43,6 +43,7 @@ import { FocusDirective } from './common/focusDirective';
 
 
 import { NgbTypeaheadModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { ApplicationInsightsErrorHandler } from './common/application-insights.errorhandler';
 
 
 //declare var $:any;
@@ -105,6 +106,8 @@ import { NgbTypeaheadModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
         [
             { provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptor, multi: true }
         ],
+
+        // { provide: ErrorHandler, useClass: ApplicationInsightsErrorHandler },
     ],
 
     bootstrap: [AppComponent]
