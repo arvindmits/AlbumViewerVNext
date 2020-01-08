@@ -6,10 +6,12 @@
     <AssemblyVersion>1.1.0.0</AssemblyVersion>
     <FileVersion>1.1.0.0</FileVersion>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <ApplicationInsightsResourceId>/subscriptions/f815a502-045b-4a1d-984d-1373fbf904ae/resourcegroups/AlbumViewerNetCore-local/providers/microsoft.insights/components/AlbumViewerNetCore</ApplicationInsightsResourceId>
   </PropertyGroup>
 
 
 	<ItemGroup>		
+		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.12.0" />		
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="3.1.0" />
@@ -38,6 +40,9 @@
       <Content Include="albums.js">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+    </ItemGroup>
+    <ItemGroup>
+      <WCFMetadata Include="Connected Services" />
     </ItemGroup>
   
 </Project>
