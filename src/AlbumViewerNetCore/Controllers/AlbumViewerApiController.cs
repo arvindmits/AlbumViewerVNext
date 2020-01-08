@@ -80,7 +80,7 @@ namespace AlbumViewerAspNetCore
         }
 
         [HttpPost("api/album")]
-        public async Task<Album> SaveAlbum([FromBody] Album postedAlbum)
+        public async Task<Album> SaveAlbum(Album postedAlbum)
         {
             //throw new ApiException("Lemmy says: NO!");
 

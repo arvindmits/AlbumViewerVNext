@@ -198,12 +198,12 @@ namespace AlbumViewerBusiness
                 return false;
             }
 
-            if (string.IsNullOrEmpty(entity.Title))
-                ValidationErrors.Add("Please enter a title for this album.", "Title");
-            else if (string.IsNullOrEmpty(entity.Description) || entity.Description.Length < 30)
-                ValidationErrors.Add("Please provide a description of at least 30 characters.");
-            else if (entity.Tracks.Count < 1)
-                ValidationErrors.Add("Album must have at least one song associated.");
+            //if (string.IsNullOrEmpty(entity.Title))
+            //    ValidationErrors.Add("Please enter a title for this album.", "Title");
+            //else if (string.IsNullOrEmpty(entity.Description) || entity.Description.Length < 30)
+            //    ValidationErrors.Add("Please provide a description of at least 30 characters.");
+            //else if (entity.Tracks.Count < 1)
+            //    ValidationErrors.Add("Album must have at least one song associated.");
 
             return ValidationErrors.Count < 1;
         }
