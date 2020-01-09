@@ -31,6 +31,10 @@ namespace AlbumViewerNetCore
 
             request.EnableBuffering();  // Allows us to reuse the existing Request.Body
 
+            var requestBody = new MemoryStream();
+            await request.Body.CopyToAsync(requestBody).ConfigureAwait(false);
+            request.Body.Position = 0;
+
             // Swap the original Response.Body stream with one we can read / seek
             var originalResponseBody = context.Response.Body;
             using var replacementResponseBody = new MemoryStream();
@@ -57,9 +61,9 @@ namespace AlbumViewerNetCore
                 return;
             }
 
-            if (request.Body.CanRead)
+            if (requestBody.CanRead)
             {
-                var requestBodyString = await ReadBodyStream(request.Body).ConfigureAwait(false);
+                var requestBodyString = await ReadBodyStream(requestBody).ConfigureAwait(false);
                 requestTelemetry.Properties.Add("RequestBody", requestBodyString);  // limit: 8192 characters
                 TelemetryClient.TrackTrace(requestBodyString);
             }
